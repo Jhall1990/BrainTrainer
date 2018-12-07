@@ -36,20 +36,20 @@ public class MainActivity extends AppCompatActivity {
         private int max = 20;
 
         GameQuestion() {
-            this.firstInt = this.getIntInRange();
-            this.secondInt = this.getIntInRange();
-            this.correctAnswer = this.firstInt + this.secondInt;
-            this.answerCell = this.random.nextInt(4);
-            this.otherAnswers = new Stack<>();
+            firstInt = getIntInRange();
+            secondInt = getIntInRange();
+            correctAnswer = firstInt + secondInt;
+            answerCell = random.nextInt(4);
+            otherAnswers = new Stack<>();
 
             for (int i = 0; i < 3; i++) {
-                this.otherAnswers.push(this.getIntInRange());
+                otherAnswers.push(getIntInRange());
             }
         }
 
         private int getIntInRange() {
             // Returns an integer within range this.min and this.max.
-            return this.random.nextInt(this.max - this.min + 1) + this.min;
+            return random.nextInt(max - min + 1) + min;
         }
     }
 
@@ -68,23 +68,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void start(View view) {
         // Set the go text view to gone and start the game.
-        this.goTextView.setVisibility(View.GONE);
-        this.startGame();
+        goTextView.setVisibility(View.GONE);
+        startGame();
     }
 
     public void playAgain(View view) {
         // First reset the score and total counts to 0. Then remove the game msg
         // text. Make the play again button invisible and finally start the game.
-        this.correctCount = 0;
-        this.totalCount = 0;
-        this.gameMsgView.setText("");
-        this.playAgainButton.setVisibility(View.INVISIBLE);
-        this.startGame();
+        correctCount = 0;
+        totalCount = 0;
+        gameMsgView.setText("");
+        playAgainButton.setVisibility(View.INVISIBLE);
+        startGame();
     }
 
     public void answer(View view) {
         // Check if the game is running first, if it's not, no need to check the answer/
-        if (this.gameRunning) {
+        if (gameRunning) {
             // Get the answer data from the passed view's tag.
             int answer = (int) view.getTag();
 
@@ -93,16 +93,16 @@ public class MainActivity extends AppCompatActivity {
             // Check the pressed answer if it is equal to the current questions answer
             // increase the correct score and change the msg text to "Correct". Otherwise
             // set the text to "Incorrect" and don't increase the score.
-            if (answer == this.currentQuestion.correctAnswer) {
-                this.correctCount++;
-                this.gameMsgView.setText("Correct!");
+            if (answer == currentQuestion.correctAnswer) {
+                correctCount++;
+                gameMsgView.setText("Correct!");
             } else {
-                this.gameMsgView.setText("Incorrect!");
+                gameMsgView.setText("Incorrect!");
             }
 
             // Display the updated score and get a new question.
-            this.updateScore();
-            this.getQuestion();
+            updateScore();
+            getQuestion();
         }
     }
 
@@ -110,40 +110,40 @@ public class MainActivity extends AppCompatActivity {
         // Sets the current score text according to the number of
         // questions the user has answered correctly over the total
         // number asked so far.
-        String scoreText = this.correctCount + "/" + this.totalCount;
-        this.scoreView.setText(scoreText);
+        String scoreText = correctCount + "/" + totalCount;
+        scoreView.setText(scoreText);
     }
 
     private void startGame() {
         // Show all the needed game views and start the game timer. Then generate
         // and display a new question for the user. Update the score display and make
         // the game msg text view visible.
-        this.showGameViews();
-        this.startTimer();
-        this.getQuestion();
-        this.updateScore();
-        this.gameMsgView.setVisibility(View.VISIBLE);
+        showGameViews();
+        startTimer();
+        getQuestion();
+        updateScore();
+        gameMsgView.setVisibility(View.VISIBLE);
     }
 
     private void getQuestion() {
         // Generate a new game question for the user and display it. Also set
         // the currentQuestion to the newly generated GameQuestion.
         GameQuestion question = new GameQuestion();
-        this.currentQuestion = question;
-        this.displayQuestion(question);
+        currentQuestion = question;
+        displayQuestion(question);
     }
 
     private void displayQuestion(GameQuestion question) {
         // Iterate over the size of answerMap. For each cell if the current cell
         // is equal to the answerCell add the answer to it, otherwise add one of the
         // other answers to it.
-        for (int i = 0; i < this.answerMap.size(); i++) {
+        for (int i = 0; i < answerMap.size(); i++) {
             if (i == question.answerCell) {
-                TextView answerCell = findViewById(this.answerMap.get(i));
+                TextView answerCell = findViewById(answerMap.get(i));
                 answerCell.setText(Integer.toString(question.correctAnswer));
                 answerCell.setTag(question.correctAnswer);
             } else {
-                TextView answerCell = findViewById(this.answerMap.get(i));
+                TextView answerCell = findViewById(answerMap.get(i));
                 int answer = question.otherAnswers.pop();
                 answerCell.setText(Integer.toString(answer));
                 answerCell.setTag(answer);
@@ -152,16 +152,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Update the problem text view with the current problem.
         String answerText = question.firstInt + " + " + question.secondInt;
-        this.problemView.setText(answerText);
+        problemView.setText(answerText);
     }
 
     private void startTimer() {
         // Get the timer text view and update the game running boolean.
         final TextView timerView = findViewById(R.id.timerView);
-        this.gameRunning = true;
+        gameRunning = true;
 
         // Create a new count down timer that lasts <gameTime> seconds and ticks every second.
-        new CountDownTimer(this.gameTime * 1000 + 100, 1000) {
+        new CountDownTimer(gameTime * 1000 + 100, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 // Update the text in the timer text view with current amount of
@@ -184,34 +184,34 @@ public class MainActivity extends AppCompatActivity {
     private void showPostGame() {
         // Show the play again button and change the game msg
         // to Done!.
-        this.playAgainButton.setVisibility(View.VISIBLE);
-        this.gameMsgView.setText("DONE!");
+        playAgainButton.setVisibility(View.VISIBLE);
+        gameMsgView.setText("DONE!");
     }
 
     private void showGameViews() {
         // Iterates over each text view used by the game and set's it to visible.
-        for (TextView textView : this.gameViews) {
+        for (TextView textView : gameViews) {
             textView.setVisibility(View.VISIBLE);
         }
     }
 
     private void populateGameViews() {
         // Get all the text views needed for the game UI.
-        this.gameViews.add((TextView) findViewById(R.id.timerView));
-        this.gameViews.add((TextView) findViewById(R.id.problemView));
-        this.gameViews.add((TextView) findViewById(R.id.scoreView));
-        this.gameViews.add((TextView) findViewById(R.id.answerView1));
-        this.gameViews.add((TextView) findViewById(R.id.answerView2));
-        this.gameViews.add((TextView) findViewById(R.id.answerView3));
-        this.gameViews.add((TextView) findViewById(R.id.answerView4));
+        gameViews.add((TextView) findViewById(R.id.timerView));
+        gameViews.add((TextView) findViewById(R.id.problemView));
+        gameViews.add((TextView) findViewById(R.id.scoreView));
+        gameViews.add((TextView) findViewById(R.id.answerView1));
+        gameViews.add((TextView) findViewById(R.id.answerView2));
+        gameViews.add((TextView) findViewById(R.id.answerView3));
+        gameViews.add((TextView) findViewById(R.id.answerView4));
     }
 
     private void createAnswerMap() {
         // Create a map of index to answerView id.
-        this.answerMap.put(0, R.id.answerView1);
-        this.answerMap.put(1, R.id.answerView2);
-        this.answerMap.put(2, R.id.answerView3);
-        this.answerMap.put(3, R.id.answerView4);
+        answerMap.put(0, R.id.answerView1);
+        answerMap.put(1, R.id.answerView2);
+        answerMap.put(2, R.id.answerView3);
+        answerMap.put(3, R.id.answerView4);
     }
 
     @Override
@@ -219,12 +219,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.populateGameViews();
-        this.createAnswerMap();
-        this.goTextView = findViewById(R.id.goTextView);
-        this.playAgainButton = findViewById(R.id.playAgainButton);
-        this.gameMsgView = findViewById(R.id.gameMsgView);
-        this.scoreView = findViewById(R.id.scoreView);
-        this.problemView = findViewById(R.id.problemView);
+        populateGameViews();
+        createAnswerMap();
+        goTextView = findViewById(R.id.goTextView);
+        playAgainButton = findViewById(R.id.playAgainButton);
+        gameMsgView = findViewById(R.id.gameMsgView);
+        scoreView = findViewById(R.id.scoreView);
+        problemView = findViewById(R.id.problemView);
     }
 }
