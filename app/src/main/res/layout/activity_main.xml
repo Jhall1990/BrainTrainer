@@ -7,12 +7,168 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/goTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:background="@android:color/holo_green_light"
+        android:onClick="start"
+        android:padding="20dp"
+        android:text="GO!"
+        android:textSize="40sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/timerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#A0ff9900"
+            android:gravity="center"
+            android:padding="5dp"
+            android:visibility="invisible"
+            android:text="30s"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/problemView"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:visibility="invisible"
+            android:text="1 + 1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/scoreView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#A00099ff"
+            android:gravity="center"
+            android:padding="5dp"
+            android:visibility="invisible"
+            android:text="0/0"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="246dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:columnCount="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rowCount="2">
+
+        <TextView
+            android:id="@+id/answerView1"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:background="#80FF0000"
+            android:gravity="center"
+            android:onClick="answer"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:visibility="invisible"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <TextView
+            android:id="@+id/answerView2"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:background="#80FFFF00"
+            android:gravity="center"
+            android:onClick="answer"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:visibility="invisible"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <TextView
+            android:id="@+id/answerView3"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:background="#8000FF00"
+            android:visibility="invisible"
+            android:onClick="answer"
+            android:textSize="30sp"
+            android:textColor="#000000"
+            android:gravity="center"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+
+        <TextView
+            android:id="@+id/answerView4"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:background="#800000FF"
+            android:visibility="invisible"
+            android:onClick="answer"
+            android:textSize="30sp"
+            android:textColor="#000000"
+            android:gravity="center"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1" />
+    </android.support.v7.widget.GridLayout>
+
+    <TextView
+        android:id="@+id/gameMsgView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+
+    <Button
+        android:id="@+id/playAgainButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:onClick="playAgain"
+        android:text="Play Again"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameMsgView" />
 
 </android.support.constraint.ConstraintLayout>
